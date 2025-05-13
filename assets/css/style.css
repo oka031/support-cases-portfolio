@@ -534,3 +534,118 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+/* Case Studies Preview */
+.case-studies-preview {
+    padding: 5rem 0;
+    background-color: white;
+}
+
+.case-studies-preview h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+}
+
+.case-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.case-card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.case-card {
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.case-card:hover {
+    border-color: #4a90a4;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(74, 144, 164, 0.1);
+}
+
+.case-card-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.case-card h3 {
+    color: #2c3e50;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.case-card p {
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+.case-tag {
+    background-color: #4a90a4;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .case-studies-preview h2 {
+        font-size: 2rem;
+    }
+    
+    .case-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Support Tools Section */
+.support-tools {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.tool-item {
+    background-color: #f0f8ff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-left: 4px solid #4a90a4;
+}
+
+.tool-item h3 {
+    color: #2c5f7e;
+    margin-bottom: 0.8rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.tool-item p {
+    color: #555;
+    line-height: 1.7;
+}
