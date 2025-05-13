@@ -306,3 +306,231 @@ body {
         display: none;
     }
 }
+
+/* Case Study Pages */
+.case-hero {
+    background: linear-gradient(135deg, #4a90a4 0%, #2c5f7e 100%);
+    color: white;
+    padding: 6rem 2rem 4rem;
+    text-align: center;
+}
+
+.case-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.case-subtitle {
+    font-size: 1.2rem;
+    color: #e0e0e0;
+    font-weight: 300;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Case Content */
+.case-content {
+    padding: 3rem 0;
+    background-color: #f8f9fa;
+}
+
+.case-section {
+    background: white;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.case-section h2 {
+    color: #2c3e50;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 3px solid #4a90a4;
+}
+
+/* Problem Box */
+.problem-box {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid #e74c3c;
+}
+
+.problem-box h3 {
+    color: #c0392b;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.problem-box blockquote {
+    font-style: italic;
+    font-size: 1.1rem;
+    color: #555;
+    border-left: 3px solid #ddd;
+    padding-left: 1rem;
+    margin: 1rem 0;
+}
+
+.problem-detail {
+    color: #666;
+    margin-top: 1rem;
+}
+
+/* Timeline Styles */
+.process-timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.process-timeline::before {
+    content: '';
+    position: absolute;
+    left: 1rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #4a90a4;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+    padding-left: 2rem;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: -1.5rem;
+    width: 2rem;
+    height: 2rem;
+    background-color: #4a90a4;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.timeline-content h3 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.timeline-content p {
+    color: #555;
+    line-height: 1.7;
+}
+
+/* Results Grid */
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.result-item {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+}
+
+.result-item h3 {
+    font-size: 1.1rem;
+    color: #4a90a4;
+    margin-bottom: 0.5rem;
+}
+
+.result-item p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* Testimonial */
+.testimonial {
+    background-color: #e8f5e9;
+    padding: 2rem;
+    border-radius: 10px;
+    border-left: 5px solid #4caf50;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: #2e7d32;
+    line-height: 1.8;
+}
+
+.testimonial .author {
+    display: block;
+    margin-top: 1rem;
+    font-weight: 600;
+    font-style: normal;
+    color: #1b5e20;
+}
+
+/* Learning Box */
+.learning-box {
+    background-color: #fff3e0;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid #ff9800;
+}
+
+.learning-box ul {
+    list-style: none;
+    padding: 0;
+}
+
+.learning-box li {
+    position: relative;
+    padding: 0.5rem 0 0.5rem 2rem;
+    color: #555;
+    line-height: 1.7;
+}
+
+.learning-box li::before {
+    content: '💡';
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .case-hero h1 {
+        font-size: 2rem;
+    }
+    
+    .case-section {
+        padding: 1.5rem;
+    }
+    
+    .process-timeline {
+        padding-left: 1rem;
+    }
+    
+    .timeline-item {
+        padding-left: 1.5rem;
+    }
+    
+    .timeline-marker {
+        left: -1rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        font-size: 0.8rem;
+    }
+    
+    .results-grid {
+        grid-template-columns: 1fr;
+    }
+}
