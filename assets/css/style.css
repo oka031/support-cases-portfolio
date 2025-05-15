@@ -85,8 +85,21 @@ body {
 .hero-message {
     font-size: 1.4rem;
     font-weight: 300;
-    margin-bottom: 1rem;
-    line-height: 1.8;
+    line-height: 1.8; /* 行間を調整 */
+    margin-bottom: 2rem;
+}
+
+.hero-message .highlight {
+    font-weight: bold;
+    color: #FFD700;
+    font-size: 1.5rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    line-height: 0.5; 
+}
+
+
+.hero-message br + br {
+    display: none; /* 連続する<br>を無効化 */
 }
 
 .hero-submessage {
@@ -1306,4 +1319,25 @@ body {
         color: black;
         padding: 2rem 0;
     }
+}
+
+/* タイピング要素を最初は非表示 */
+.typing-effect {
+    opacity: 0;
+}
+
+/* タイピング開始時に表示 */
+.typing-effect.typing-active {
+    opacity: 1;
+}
+
+/* より確実な初期非表示 */
+.typing-effect {
+    opacity: 0 !important;
+    visibility: hidden;
+}
+
+.typing-effect.typing-active {
+    opacity: 1 !important;
+    visibility: visible;
 }

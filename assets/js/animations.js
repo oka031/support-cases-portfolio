@@ -1,4 +1,4 @@
-// animations.js 完全版
+// animations.js 完全版（修正済み）
 
 // スクロールアニメーション
 document.addEventListener('DOMContentLoaded', function() {
@@ -31,61 +31,110 @@ document.addEventListener('DOMContentLoaded', function() {
         el.classList.add('animate-on-scroll');
         observer.observe(el);
     });
+
+    // タイピングアニメーション（修正版）を最後に実行
+    const typingElements = document.querySelectorAll('.typing-effect');
+    typingElements.forEach((element, index) => {
+        const typewriter = new TypewriterEffect(element, {
+            speed: 30,
+            delay: index * 1000
+        });
+        typewriter.start();
+    });
 });
 
-// タイピングアニメーション
-function typeWriter(element, text, speed = 50) {
-    let i = 0;
-    element.innerHTML = '';
-    element.style.borderRight = '2px solid white';
+// HTMLタグ対応タイピングアニメーション
+class TypewriterEffect {
+    constructor(element, options = {}) {
+        this.element = element;
+        this.originalHTML = element.innerHTML;
+        this.speed = options.speed || 50;
+        this.delay = options.delay || 0;
+        this.currentIndex = 0;
+        this.currentHTML = '';
+        
+        // HTMLタグを解析して文字とタグのリストを作成
+        this.parseHTML();
+    }
     
-    function type() {
-        if (i < text.length) {
-            element.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
-        } else {
-            // タイピング完了後、カーソルを点滅させる
-            setTimeout(() => {
-                element.style.borderRight = 'none';
-            }, 500);
+    parseHTML() {
+        this.tokens = [];
+        let tempDiv = document.createElement('div');
+        tempDiv.innerHTML = this.originalHTML;
+        
+        this.processNode(tempDiv);
+    }
+    
+    processNode(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+            // テキストノードの場合、一文字ずつ配列に追加
+            const text = node.textContent;
+            for (let char of text) {
+                this.tokens.push({ type: 'char', content: char });
+            }
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+            // 要素ノードの場合、開始タグを追加
+            const tagName = node.tagName.toLowerCase();
+            const attributes = this.getAttributesString(node);
+            this.tokens.push({ 
+                type: 'openTag', 
+                content: `<${tagName}${attributes}>` 
+            });
+            
+            // 子ノードを再帰的に処理
+            for (let child of node.childNodes) {
+                this.processNode(child);
+            }
+            
+            // 終了タグを追加
+            this.tokens.push({ 
+                type: 'closeTag', 
+                content: `</${tagName}>` 
+            });
         }
     }
-    type();
-}
-
-// Heroセクションのタイピング効果
-document.addEventListener('DOMContentLoaded', function() {
-    const heroTitle = document.querySelector('.hero h1');
-    const heroMessage = document.querySelector('.hero-message');
-    const heroSubmessage = document.querySelector('.hero-submessage');
     
-    if (heroTitle) {
-        // 元のテキストを保存
-        const titleText = heroTitle.textContent;
-        const messageText = heroMessage.textContent;
-        const submessageText = heroSubmessage.textContent;
-        
-        // 要素を非表示にしてからタイピング開始
-        heroMessage.style.opacity = '0';
-        heroSubmessage.style.opacity = '0';
-        
-        // タイトルのタイピング（少し早め）
-        typeWriter(heroTitle, titleText, 80);
-        
-        // メッセージのタイピング（タイトル完了後）
-        setTimeout(() => {
-            heroMessage.style.opacity = '1';
-            typeWriter(heroMessage, messageText, 40);
-        }, titleText.length * 80 + 500);
-        
-        // サブメッセージのタイピング（メッセージ完了後）
-        setTimeout(() => {
-            heroSubmessage.style.opacity = '1';
-            typeWriter(heroSubmessage, submessageText, 30);
-        }, titleText.length * 80 + messageText.length * 40 + 1500);
+    getAttributesString(element) {
+        let attrs = '';
+        for (let attr of element.attributes) {
+            attrs += ` ${attr.name}="${attr.value}"`;
+        }
+        return attrs;
     }
-});
+    
+    start() {
+        // 最初に要素を非表示にする
+        this.element.style.opacity = '0';
+        
+        setTimeout(() => {
+            this.element.innerHTML = '';
+            this.element.style.opacity = '1';
+            this.element.classList.add('typing-active');
+            this.typeNext();
+        }, this.delay);
+    }
+    
+    typeNext() {
+        if (this.currentIndex < this.tokens.length) {
+            const token = this.tokens[this.currentIndex];
+            
+            if (token.type === 'char') {
+                // 文字の場合、一文字ずつ表示
+                this.currentHTML += token.content;
+                this.element.innerHTML = this.currentHTML;
+                this.currentIndex++;
+                setTimeout(() => this.typeNext(), this.speed);
+            } else {
+                // タグの場合、一気に追加（表示はされない）
+                this.currentHTML += token.content;
+                this.element.innerHTML = this.currentHTML;
+                this.currentIndex++;
+                // タグは即座に次へ
+                this.typeNext();
+            }
+        }
+    }
+}
 
 // カウントアップアニメーション
 function countUp(element, target, duration = 2000) {
@@ -436,32 +485,34 @@ function animateCircularProgress(circle, targetPercent) {
 }
 
 // スキルセクションの初期化（animations.jsのDOMContentLoadedに追加）
-// スクロール時にスキルプログレスをアニメーション
-const skillCircles = document.querySelectorAll('.skill-circle');
-if (skillCircles.length > 0) {
-    const skillObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const circle = entry.target;
-                const targetPercent = parseInt(circle.getAttribute('data-percent'));
-                
-                // 少し遅延させて段階的にアニメーション
-                const delay = Array.from(skillCircles).indexOf(circle) * 200;
-                setTimeout(() => {
-                    animateCircularProgress(circle, targetPercent);
-                }, delay);
-                
-                skillObserver.unobserve(circle);
-            }
-        });
-    }, { threshold: 0.5 });
+document.addEventListener('DOMContentLoaded', function() {
+    // スクロール時にスキルプログレスをアニメーション
+    const skillCircles = document.querySelectorAll('.skill-circle');
+    if (skillCircles.length > 0) {
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const circle = entry.target;
+                    const targetPercent = parseInt(circle.getAttribute('data-percent'));
+                    
+                    // 少し遅延させて段階的にアニメーション
+                    const delay = Array.from(skillCircles).indexOf(circle) * 200;
+                    setTimeout(() => {
+                        animateCircularProgress(circle, targetPercent);
+                    }, delay);
+                    
+                    skillObserver.unobserve(circle);
+                }
+            });
+        }, { threshold: 0.5 });
 
-    skillCircles.forEach(circle => {
-        // 初期状態設定
-        circle.style.setProperty('--progress-deg', '0deg');
-        skillObserver.observe(circle);
-    });
-}
+        skillCircles.forEach(circle => {
+            // 初期状態設定
+            circle.style.setProperty('--progress-deg', '0deg');
+            skillObserver.observe(circle);
+        });
+    }
+});
 
 // パーティクル背景システム（animations.jsに追加）
 
@@ -611,8 +662,6 @@ class Particle {
 
 // DOMContentLoadedでパーティクルシステム初期化
 document.addEventListener('DOMContentLoaded', function() {
-    // 既存の初期化コードの後に追加
-    
     // パーティクル背景初期化（Hero Sectionがある場合のみ）
     if (document.getElementById('hero-particles')) {
         new ParticleSystem('hero-particles');
