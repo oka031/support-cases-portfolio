@@ -3,115 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>AIと共に、人の可能性を最大化する支援者 | oka</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+ <!-- PWA Manifest -->
+<link rel="manifest" href="/manifest.json">
+
+<!-- iOS用アイコン -->
+<link rel="apple-touch-icon" href="/assets/images/180.png">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/images/android-launchericon-192-192.png">
+
+<!-- Theme Color for Browser UI -->
+<meta name="theme-color" content="#667eea">
+<meta name="msapplication-TileColor" content="#667eea">
+
+<!-- PWA設定 -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Oka Portfolio">
     
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="AIと共に人の可能性を最大化する技術支援者のポートフォリオ。非エンジニア向けの丁寧なサポート実績。">
+    <meta name="keywords" content="AI, 技術支援, ポートフォリオ, サポート, 非エンジニア">
+    
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-
-     <!-- Navigation -->
-     <nav class="navbar">
+    <!-- スクロール進捗バー -->
+<div class="scroll-progress-container">
+    <div class="scroll-progress-bar"></div>
+</div>
+    <!-- Navigation -->
+    <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
                 <a href="#top">Oka</a>
             </div>
             <ul class="nav-menu">
                 <li><a href="#about">About</a></li>
-                <li><a href="#pages">実績・事例</a></li>
+                <li><a href="#cases">実績・事例</a></li>
                 <li><a href="#skills">スキル</a></li>
                 <li><a href="#contact" class="nav-cta">Contact</a></li>
             </ul>
         </div>
     </nav>
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>AIと共に、人の可能性を最大化する支援者</h1>
-            <p class="hero-message">
-                技術が苦手でも、未来は自分で創れる。<br>
-                私はAIと共に、"できない"を"できる"に変える橋を架けます。
-            </p>
-            <p class="hero-submessage">
-                学び・創造・挑戦をもっと身近に。
-            </p>
-            <p class="hero-note">
-                非エンジニアにもわかる言葉で、<br>
-                AIと人が協働する社会の一歩目をサポートします。
-            </p>
-            
-            <!-- CTA Section -->
-            <div class="cta-message">
-                <strong>現場でのAI活用支援、実績あります。</strong><br>
-                貴社の"人とAIの共創"に、実践的な一歩を届けます。
+
+   <!-- Hero Section 修正版 -->
+<section class="hero" id="top">
+    <!-- パーティクル背景用Canvas -->
+    <canvas id="hero-particles"></canvas>
+    
+    <div class="hero-content">
+        <h1 class="typing-effect">AIと共に、人の可能性を最大化する支援者</h1>
+        <p class="hero-message typing-effect">
+            技術が苦手でも、未来は自分で創れる。<br>
+            私はAIと共に、"できない"を"できる"に変える橋を架けます。
+        </p>
+        <p class="hero-submessage typing-effect">
+            学び・創造・挑戦をもっと身近に。
+        </p>
+        <p class="hero-note">
+            非エンジニアにもわかる言葉で、<br>
+            AIと人が協働する社会の一歩目をサポートします。
+        </p>
+
+        <!-- Stats Section -->
+        <div class="hero-stats">
+            <div class="stat-item">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-number" data-target="3">0</div>
+                <div class="stat-label">解決事例</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">⏱️</div>
+                <div class="stat-number" data-target="1.5">0</div>
+                <div class="stat-label">平均解決時間（時間）</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">😊</div>
+                <div class="stat-number" data-target="100">0</div>
+                <div class="stat-label">利用者満足度（%）</div>
             </div>
         </div>
-
-        <!-- Value Proposition Section -->
-        <div class="value-card">
-            <div class="value-icon">🤖</div>
-            <h3>AI活用の実践経験</h3>
-            <p>
-                ClaudeやChatGPTを活用した実際のサポート事例から学んだ、
-                <strong>非エンジニアにも伝わりやすい</strong>AI活用方法をお伝えできます。
-            </p>
-        </div>
         
-        <div class="value-card">
-            <div class="value-icon">👥</div>
-            <h3>人に寄り添う技術支援</h3>
-            <p>
-                一人ひとりの困り事に<strong>深く共感</strong>し、
-                技術的な問題を相手の立場に立って、丁寧に解決していきます。
-            </p>
-        </div>
-        
-        <div class="value-card">
-            <div class="value-icon">🌱</div>
-            <h3>継続的な成長支援</h3>
-            <p>
-                単発の問題解決ではなく、<strong>長期的な伴走</strong>により、
-                「できない」を「できる」に変える過程を大切にします。
-            </p>
-        </div>
-    </section>
-
-    <!-- Case Studies Preview Section -->
-<section class="case-studies-preview">
-    <div class="container">
-        <h2>実際のサポート事例</h2>
-        <p class="section-subtitle">実践的なAI活用と人への寄り添いを、具体的な事例でご紹介</p>
-        
-        <div class="case-cards">
-            <a href="pages/pc-connection-case.html" class="case-card-link">
-                <div class="case-card">
-                    <div class="case-card-icon">🖥️</div>
-                    <h3>PC接続問題解決</h3>
-                    <p>WiFi接続済みなのにインターネットが使えない問題を1時間半で解決</p>
-                    <span class="case-tag">技術×心理支援</span>
-                </div>
-            </a>
-            
-            <a href="pages/google-docs-save-case.html" class="case-card-link">
-                <div class="case-card">
-                    <div class="case-card-icon">💾</div>
-                    <h3>Google保存問題解決</h3>
-                    <p>「移動」「キャンセル」への不安解消と安全な保存方法の習得</p>
-                    <span class="case-tag">不安解消×丁寧説明</span>
-                </div>
-            </a>
-            
-            <a href="pages/android-input-case.html" class="case-card-link">
-                <div class="case-card">
-                    <div class="case-card-icon">📱</div>
-                    <h3>Android入力問題サポート</h3>
-                    <p>適切なサポート橋渡しと継続的な関係性構築</p>
-                    <span class="case-tag">限界認識×橋渡し</span>
-                </div>
-            </a>
+        <!-- CTA Section -->
+        <div class="cta-message">
+            <strong>現場でのAI活用支援、実績あります。</strong><br>
+            貴社の"人とAIの共創"に、実践的な一歩を届けます。
         </div>
     </div>
 </section>
+    <!-- Value Proposition Section -->
+    <section class="value-section" id="about">
+        <div class="container">
+            <h2>3つの強みで組織の「AI × 人」共創を実現</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🤖</div>
+                    <h3>AI活用の実践経験</h3>
+                    <p>
+                        ClaudeやChatGPTを活用した実際のサポート事例から学んだ、
+                        <strong>非エンジニアにも伝わりやすい</strong>AI活用方法をお伝えできます。
+                    </p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">👥</div>
+                    <h3>人に寄り添う技術支援</h3>
+                    <p>
+                        一人ひとりの困り事に<strong>深く共感</strong>し、
+                        技術的な問題を相手の立場に立って、丁寧に解決していきます。
+                    </p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">🌱</div>
+                    <h3>継続的な成長支援</h3>
+                    <p>
+                        単発の問題解決ではなく、<strong>長期的な伴走</strong>により、
+                        「できない」を「できる」に変える過程を大切にします。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section (Value Sectionの後、Case Studies Previewの前に追加) -->
+<section class="skills-section" id="skills">
+    <div class="container">
+        <h2>実証されたスキルレベル</h2>
+        <p class="section-subtitle">具体的な実績と事例に基づく、客観的なスキル評価</p>
+        
+        <div class="skills-grid">
+            <div class="skill-item">
+                <div class="skill-circle" data-percent="95">
+                    <div class="skill-circle-inner">
+                        <span class="skill-percent">0%</span>
+                    </div>
+                </div>
+                <h3>AI活用実践力</h3>
+                <p>Claude/ChatGPT活用で実際に問題解決。3つの具体的事例で証明済み。</p>
+            </div>
+
+            <div class="skill-item">
+                <div class="skill-circle" data-percent="90">
+                    <div class="skill-circle-inner">
+                        <span class="skill-percent">0%</span>
+                    </div>
+                </div>
+                <h3>非エンジニア向け説明力</h3>
+                <p>「ドライバー=通訳」など比喩を駆使。K.Tさんからの感謝の声。</p>
+            </div>
+
+            <div class="skill-item">
+                <div class="skill-circle" data-percent="95">
+                    <div class="skill-circle-inner">
+                        <span class="skill-percent">0%</span>
+                    </div>
+                </div>
+                <h3>問題解決スピード</h3>
+                <p>平均1.5時間で解決。事前AI準備で効率化を実現。</p>
+            </div>
+
+            <div class="skill-item">
+                <div class="skill-circle" data-percent="100">
+                    <div class="skill-circle-inner">
+                        <span class="skill-percent">0%</span>
+                    </div>
+                </div>
+                <h3>人に寄り添う技術支援</h3>
+                <p>「不安→楽しい」への転換実績。感情変化グラフで可視化済み。</p>
+            </div>
+
+            <div class="skill-item">
+                <div class="skill-circle" data-percent="80">
+                    <div class="skill-circle-inner">
+                        <span class="skill-percent">0%</span>
+                    </div>
+                </div>
+                <h3>Web技術基盤力</h3>
+                <p>このサイト自体が技術力の証明。レスポンシブ・アニメーション実装。</p>
+            </div>
+
+            <div class="skill-item">
+                <div class="skill-circle" data-percent="85">
+                    <div class="skill-circle-inner">
+                        <span class="skill-percent">0%</span>
+                    </div>
+                </div>
+                <h3>継続学習・成長力</h3>
+                <p>転職活動中もスキルアップ。ポートフォリオの継続改善。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Case Studies Preview Section -->
+    <section class="case-studies-preview" id="cases">
+        <div class="container">
+            <h2>実際のサポート事例</h2>
+            <p class="section-subtitle">実践的なAI活用と人への寄り添いを、具体的な事例でご紹介</p>
+            
+            <div class="case-cards">
+                <a href="pages/pc-connection-case.html" class="case-card-link">
+                    <div class="case-card">
+                        <div class="case-card-icon">🖥️</div>
+                        <h3>PC接続問題解決</h3>
+                        <p>WiFi接続済みなのにインターネットが使えない問題を1時間半で解決</p>
+                        <span class="case-tag">技術×心理支援</span>
+                    </div>
+                </a>
+                
+                <a href="pages/google-docs-save-case.html" class="case-card-link">
+                    <div class="case-card">
+                        <div class="case-card-icon">💾</div>
+                        <h3>Google保存問題解決</h3>
+                        <p>「移動」「キャンセル」への不安解消と安全な保存方法の習得</p>
+                        <span class="case-tag">不安解消×丁寧説明</span>
+                    </div>
+                </a>
+                
+                <a href="pages/android-input-case.html" class="case-card-link">
+                    <div class="case-card">
+                        <div class="case-card-icon">📱</div>
+                        <h3>Android入力問題サポート</h3>
+                        <p>適切なサポート橋渡しと継続的な関係性構築</p>
+                        <span class="case-tag">限界認識×橋渡し</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -126,5 +249,21 @@
             </div>
         </div>
     </footer>
+
+    <script src="assets/js/animations.js"></script>
+    <script>
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+              .then(registration => {
+                console.log('Service Worker registered: ', registration);
+              })
+              .catch(registrationError => {
+                console.log('Service Worker registration failed: ', registrationError);
+              });
+          });
+        }
+        </script>
 </body>
 </html>

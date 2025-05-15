@@ -4,10 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
     <title>PC接続問題解決事例 | Oka</title>
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
+    <!-- スクロール進捗バー -->
+<div class="scroll-progress-container">
+    <div class="scroll-progress-bar"></div>
+</div>
     <!-- Case Study Header -->
     <section class="case-hero">
         <h1>K.Tさんとの協働によるPC接続問題解決</h1>
@@ -22,14 +27,24 @@
             <section class="case-section">
                 <h2>状況とチャレンジ</h2>
                 <div class="problem-box">
-                    <h3>K.Tさん（医療事務・ビジネスコミュニティメンバー）からの相談</h3>
+                    <h3>K.Tさん（医療事務）からの相談</h3>
                     <blockquote>
                         "新しい中古PCのWiFiは接続されているのに、インターネットが繋がらなくて困っています。
-                        ビジネスコミュニティの皆さんに聞いても分からず、販売店への問い合わせも、コールセンターの案内でよく分からず、上手く繋がらなくて...🆘"
+                        皆さんに聞いても分からず、販売店への問い合わせも、コールセンターの案内がよく分からず、上手く繋がらなくて...🆘"
                     </blockquote>
                     <p class="problem-detail">
                         購入から約2週間、様々な方に相談されても解決せず、販売店のサポートにも上手く繋がらない状況でした。
                     </p>
+                </div>
+            </section>
+
+            <section class="case-section">
+                <div class="emotion-graph-container">
+                    <div class="emotion-graph-header">
+                        <h3>K.Tさんの感情変化</h3>
+                        <p>問題解決過程での心理状態の変化を可視化</p>
+                    </div>
+                    <div id="emotion-graph"></div>
                 </div>
             </section>
     
@@ -85,7 +100,7 @@
                     </div>
                     <div class="result-item">
                         <h3>🎯 技術理解</h3>
-                        <p>「ドライバー=通訳」と理解</p>
+                        <p>「ドライバー = 通訳」と理解</p>
                     </div>
                 </div>
                 
@@ -103,7 +118,7 @@
                     <ul>
                         <li>事前準備とAI活用による効率的サポートの重要性</li>
                         <li>技術者ではない方との協力的な問題解決スタイル</li>
-                        <li>分かりやすい説明（技術的な「翻訳」）の価値</li>
+                        <li>分かりやすい説明（技術的な「翻訳」)の価値</li>
                         <li>Windowsサポートの経験とMacサポートへの専門性強化の方向性</li>
                         <li>サポートが困難な場合の適切な次のステップ（販売店サポートへの橋渡し）の重要性</li>
                     </ul>
@@ -111,5 +126,6 @@
             </section>
         </div>
     </main>
+    <script src="../assets/js/animations.js"></script>
 </body>
 </html>

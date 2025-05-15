@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Google保存問題解決事例 | Oka</title>
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
+    <!-- スクロール進捗バー -->
+<div class="scroll-progress-container">
+    <div class="scroll-progress-bar"></div>
+</div>
     <!-- Case Study Header -->
     <section class="case-hero">
         <h1>K.Tさんとの協働によるGoogle保存問題解決</h1>
@@ -29,6 +34,16 @@
                     <p class="problem-detail">
                         LINEスレッドでの作業中に発生した問題で、保存操作への不安から作業が停止してしまった状況でした。
                     </p>
+                </div>
+            </section>
+
+            <section class="case-section">
+                <div class="emotion-graph-container">
+                    <div class="emotion-graph-header">
+                        <h3>K.Tさんの感情変化</h3>
+                        <p>問題解決過程での心理状態の変化を可視化</p>
+                    </div>
+                    <div id="emotion-graph"></div>
                 </div>
             </section>
 
@@ -109,5 +124,6 @@
             </section>
         </div>
     </main>
+    <script src="../assets/js/animations.js"></script>
 </body>
 </html>

@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Android入力問題サポート事例 | Oka</title>
     <link rel="stylesheet" href="../assets/css/style.css">
+    
 </head>
 <body>
+    <!-- スクロール進捗バー -->
+<div class="scroll-progress-container">
+    <div class="scroll-progress-bar"></div>
+</div>
     <!-- Case Study Header -->
     <section class="case-hero">
         <h1>K.TさんのAndroid入力問題サポート</h1>
@@ -29,6 +34,16 @@
                     <p class="problem-detail">
                         オンライン雑談部屋で発覚した問題。PCでのサポートとは異なり、Androidの操作特有の課題でした。
                     </p>
+                </div>
+            </section>
+            
+            <section class="case-section">
+                <div class="emotion-graph-container">
+                    <div class="emotion-graph-header">
+                        <h3>K.Tさんの感情変化</h3>
+                        <p>問題解決過程での心理状態の変化を可視化</p>
+                    </div>
+                    <div id="emotion-graph"></div>
                 </div>
             </section>
 
@@ -124,5 +139,6 @@
             </section>
         </div>
     </main>
+    <script src="../assets/js/animations.js"></script>
 </body>
 </html>
