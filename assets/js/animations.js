@@ -603,7 +603,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// パーティクル背景システム
+// パーティクル背景システム（修正版）
 class ParticleSystem {
     constructor(canvasId) {
         this.canvas = document.getElementById(canvasId);
@@ -690,11 +690,13 @@ class ParticleSystem {
     }
 }
 
+// パーティクルクラス（修正版）
 class Particle {
     constructor(canvasWidth, canvasHeight) {
         this.x = Math.random() * canvasWidth;
         this.y = Math.random() * canvasHeight;
         this.size = Math.random() * 3 + 1;
+        this.initialSize = this.size; // 初期サイズを保存
         this.speedX = (Math.random() - 0.5) * 0.5;
         this.speedY = (Math.random() - 0.5) * 0.5;
         this.opacity = Math.random() * 0.5 + 0.3;
@@ -722,22 +724,29 @@ class Particle {
             this.y += dy * force * 0.03;
         }
         
-        // サイズ変動効果
-        this.size += Math.sin(Date.now() * 0.001 + this.x * 0.01) * 0.01;
+        // サイズ変動効果（修正版）
+        const sizeVariation = Math.sin(Date.now() * 0.001 + this.x * 0.01) * 0.02;
+        this.size = this.initialSize + sizeVariation;
+        
+        // サイズが負になることを防ぐ
+        this.size = Math.max(0.1, this.size);
     }
     
     draw(ctx) {
+        // 描画前にサイズの安全性をさらに確認
+        const safeSize = Math.max(0.1, this.size);
+        
         ctx.save();
         ctx.globalAlpha = this.opacity;
         ctx.fillStyle = 'white';
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.arc(this.x, this.y, safeSize, 0, Math.PI * 2);
         ctx.fill();
         
-        // 輝き効果
+        // 輝き効果（修正版）
         const gradient = ctx.createRadialGradient(
             this.x, this.y, 0,
-            this.x, this.y, this.size * 3
+            this.x, this.y, Math.max(0.1, safeSize * 3)
         );
         gradient.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
         gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');

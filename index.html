@@ -4,31 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AIと共に、人の可能性を最大化する支援者 | oka</title>
- <!-- PWA Manifest -->
-<link rel="manifest" href="/manifest.json">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/support-cases-portfolio/manifest.json">
 
-<link rel="icon" type="image/x-icon" href="./favicon.ico">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/support-cases-portfolio/favicon.ico">
 
-<!-- iOS用アイコン -->
-<link rel="apple-touch-icon" href="/assets/images/180.png">
+    <!-- iOS用アイコン -->
+    <link rel="apple-touch-icon" href="/support-cases-portfolio/assets/images/180.png">
 
-<!-- Favicon -->
-<link rel="icon" type="image/png" sizes="192x192" href="/assets/images/android-launchericon-192-192.png">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/support-cases-portfolio/assets/images/android-launchericon-192-192.png">
 
-<!-- Theme Color for Browser UI -->
-<meta name="theme-color" content="#667eea">
-<meta name="msapplication-TileColor" content="#667eea">
+    <!-- Theme Color for Browser UI -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="msapplication-TileColor" content="#667eea">
 
-<!-- PWA設定 -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Oka Portfolio">
+    <!-- PWA設定 -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Oka Portfolio">
     
     <!-- SEO Meta Tags -->
     <meta name="description" content="AIと共に人の可能性を最大化する技術支援者のポートフォリオ。非エンジニア向けの丁寧なサポート実績。">
     <meta name="keywords" content="AI, 技術支援, ポートフォリオ, サポート, 非エンジニア">
     
-    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="/support-cases-portfolio/assets/css/style.css">
 </head>
 <body>
     <!-- スクロール進捗バー -->
@@ -260,12 +264,12 @@
         </div>
     </footer>
 
-    <script src="assets/js/animations.js"></script>
+    <script src="/support-cases-portfolio/assets/js/animations.js"></script>
     <script>
         // Service Worker Registration
         if ('serviceWorker' in navigator) {
           window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/sw.js')
+            navigator.serviceWorker.register('/support-cases-portfolio/sw.js')
               .then(registration => {
                 console.log('Service Worker registered: ', registration);
               })
@@ -274,6 +278,6 @@
               });
           });
         }
-        </script>
+    </script>
 </body>
 </html>
