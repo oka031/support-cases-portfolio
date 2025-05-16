@@ -9,14 +9,19 @@
 </head>
 <body>
     <!-- スクロール進捗バー -->
-<div class="scroll-progress-container">
-    <div class="scroll-progress-bar"></div>
-</div>
+    <div class="scroll-progress-container">
+        <div class="scroll-progress-bar"></div>
+    </div>
+    
     <!-- Case Study Header -->
     <section class="case-hero">
-        <h1>K.Tさんとの協働によるGoogle保存問題解決</h1>
+        <!-- PC用タイトル -->
+        <h1 class="desktop-title">K.Tさんとの協働によるGoogle保存問題解決</h1>
+        <!-- モバイル用タイトル -->
+        <h1 class="mobile-title">K.Tさんとの協働による<br>Google保存問題解決</h1>
+        
         <p class="case-subtitle">「移動」「キャンセル」画面での不安解消と、安全な保存方法の習得</p>
-        <p class="back-link"><a href="../index.html">ホームに戻る</a></p>
+        <a href="../index.html" class="back-home">ホームに戻る</a>
     </section>
     
     <!-- Case Content -->
@@ -26,7 +31,7 @@
             <section class="case-section">
                 <h2>状況とチャレンジ</h2>
                 <div class="problem-box">
-                    <h3>K.Tさんからの相談</h3>
+                    <h3>K.Tさん（医療事務）からの相談</h3>
                     <blockquote>
                         "ノウハウの原材料ワークシートを入力し終わったのですが、右上の❌を押すと「移動 or キャンセル」が出てきます。
                         この『移動』を使ったことがなく、どうすれば安全に保存できるのかわからなくて困っています😅"
@@ -44,6 +49,9 @@
                         <p>問題解決過程での心理状態の変化を可視化</p>
                     </div>
                     <div id="emotion-graph"></div>
+                    <div class="emotion-cards-container" id="emotionCards">
+                        <!-- カードはJavaScriptで動的生成されます -->
+                    </div>
                 </div>
             </section>
 
@@ -106,7 +114,7 @@
                 <blockquote class="testimonial">
                     "できました！作業中は移動・キャンセル画面にはなりませんでした！
                     何だかGoogleアカウントなんたら...とか出てきて適当に押していたら一度閉じましたが、コピー②も残っています🩷"<br>
-                    <span class="author">- K.Tさん</span>
+                    <span class="author">- K.Tさん（医療事務）</span>
                 </blockquote>
             </section>
 

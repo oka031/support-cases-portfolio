@@ -15,8 +15,14 @@
 </div>
     <!-- Case Study Header -->
     <section class="case-hero">
-        <h1>K.Tさんとの協働によるPC接続問題解決</h1>
-        <p class="case-subtitle">WiFi接続済みなのにインターネットに繋がらない問題を約1時間で解決</p>
+        <!-- PC用タイトル -->
+        <h1 class="desktop-title">K.Tさんとの協働によるPC接続問題解決</h1>
+        <!-- モバイル用タイトル -->
+        <h1 class="mobile-title">K.Tさんとの協働に<br>よるPC接続問題解決</h1>
+        
+        <p class="desktop-title">WiFi接続済みなのにインターネットに繋がらない問題を約1時間で<br>解決</p>
+        <p class="mobile-title">WiFi接続済みなのにインターネットに<br>繋がらない問題を約1時間で解決</p>
+
         <a href="../index.html" class="back-home">ホームに戻る</a>
     </section>
     
@@ -29,8 +35,8 @@
                 <div class="problem-box">
                     <h3>K.Tさん（医療事務）からの相談</h3>
                     <blockquote>
-                        "新しい中古PCのWiFiは接続されているのに、インターネットが繋がらなくて困っています。
-                        皆さんに聞いても分からず、販売店への問い合わせも、コールセンターの案内がよく分からず、上手く繋がらなくて...🆘"
+                        "新しい中古PCのWiFiは接続されているのに、<br class="mobile-only">インターネットが繋がらなくて困っています。
+                        皆さんに聞いても分からず、<br>販売店への問い合わせも、コールセンターの案内がよく分からず、上手く繋がらなくて...🆘"
                     </blockquote>
                     <p class="problem-detail">
                         購入から約2週間、様々な方に相談されても解決せず、販売店のサポートにも上手く繋がらない状況でした。
@@ -45,6 +51,9 @@
                         <p>問題解決過程での心理状態の変化を可視化</p>
                     </div>
                     <div id="emotion-graph"></div>
+                    <div class="emotion-cards-container" id="emotionCards">
+                        <!-- カードはJavaScriptで動的生成されます -->
+                    </div>
                 </div>
             </section>
     

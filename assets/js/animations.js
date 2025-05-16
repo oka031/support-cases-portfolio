@@ -1,4 +1,4 @@
-// animations.js 完全版（修正済み）
+// animations.js 完全版（クリック式感情グラフ対応）
 
 // スクロールアニメーション
 document.addEventListener('DOMContentLoaded', function() {
@@ -199,66 +199,35 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// 感情変化グラフの実装（完全版・最新）
+// クリック式感情グラフクラス
 class EmotionGraph {
     constructor(containerId, data) {
         this.container = document.getElementById(containerId);
         this.data = data;
-        this.svgWidth = 800;  // 拡大済み
-        this.svgHeight = 350; // 拡大済み
-        this.padding = 60;    // 拡大済み
-        this.isDrawn = false;
-        
+        this.svgWidth = 800;
+        this.svgHeight = 350;
+        this.padding = 60;
         this.init();
     }
 
     init() {
-        if (!this.container) return;
+        if (!this.container) {
+            console.error('グラフコンテナが見つかりません');
+            return;
+        }
         
-        // SVG要素の作成
+        // SVG作成
         this.svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         this.svg.setAttribute('width', '100%');
         this.svg.setAttribute('height', this.svgHeight);
         this.svg.setAttribute('viewBox', `0 0 ${this.svgWidth} ${this.svgHeight}`);
         this.container.appendChild(this.svg);
 
-        // グラデーション定義
-        this.createGradient();
-        
         // 軸の描画
         this.drawAxes();
         
         // Intersection Observer でアニメーション開始
         this.setupIntersectionObserver();
-    }
-
-    createGradient() {
-        const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-        
-        // 線のグラデーション（赤→黄→緑）
-        const lineGradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
-        lineGradient.setAttribute('id', 'emotionGradient');
-        lineGradient.setAttribute('gradientUnits', 'userSpaceOnUse');
-        lineGradient.setAttribute('x1', '0%');
-        lineGradient.setAttribute('y1', '0%');
-        lineGradient.setAttribute('x2', '100%');
-        lineGradient.setAttribute('y2', '0%');
-        
-        const stops = [
-            { offset: '0%', color: '#ef4444' },
-            { offset: '50%', color: '#fbbf24' },
-            { offset: '100%', color: '#10b981' }
-        ];
-        
-        stops.forEach(stop => {
-            const stopElement = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
-            stopElement.setAttribute('offset', stop.offset);
-            stopElement.setAttribute('stop-color', stop.color);
-            lineGradient.appendChild(stopElement);
-        });
-        
-        defs.appendChild(lineGradient);
-        this.svg.appendChild(defs);
     }
 
     drawAxes() {
@@ -282,7 +251,7 @@ class EmotionGraph {
         yAxis.setAttribute('stroke-width', '2');
         this.svg.appendChild(yAxis);
 
-        // Y軸ラベル（感情レベル）
+        // Y軸ラベル
         const yLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         yLabel.setAttribute('x', '20');
         yLabel.setAttribute('y', '30');
@@ -296,9 +265,10 @@ class EmotionGraph {
     setupIntersectionObserver() {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting && !this.isDrawn) {
+                if (entry.isIntersecting) {
+                    console.log('グラフの描画開始');
                     this.drawGraph();
-                    this.isDrawn = true;
+                    observer.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.5 });
@@ -310,52 +280,59 @@ class EmotionGraph {
         const chartWidth = this.svgWidth - 2 * this.padding;
         const chartHeight = this.svgHeight - 2 * this.padding;
         
-        // データポイントの計算
+        // ポイントの計算
         const points = this.data.map((item, index) => {
             const x = this.padding + (chartWidth / (this.data.length - 1)) * index;
             const y = this.svgHeight - this.padding - (item.level / 100) * chartHeight;
             return { x, y, ...item };
         });
 
-        // パスの作成
+        // 線の描画（アニメーション付き）
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         const pathData = points.map((point, index) => {
             return index === 0 ? `M ${point.x} ${point.y}` : `L ${point.x} ${point.y}`;
         }).join(' ');
-
-        // アニメーション用の隠れたパス
-        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        
         path.setAttribute('d', pathData);
-        path.setAttribute('stroke', 'url(#emotionGradient)');
+        path.setAttribute('stroke', '#4A90A4');
         path.setAttribute('stroke-width', '3');
         path.setAttribute('fill', 'none');
+        path.setAttribute('stroke-linecap', 'round');
+        path.setAttribute('stroke-linejoin', 'round');
         path.setAttribute('stroke-dasharray', '1000');
         path.setAttribute('stroke-dashoffset', '1000');
         this.svg.appendChild(path);
 
-        // パスアニメーション
+        // 線のアニメーション
         setTimeout(() => {
             path.style.transition = 'stroke-dashoffset 2s ease-out';
             path.style.strokeDashoffset = '0';
         }, 100);
 
-        // ポイントとラベルの描画（遅延）
+        // ポイントとクリック領域を描画（遅延）
         points.forEach((point, index) => {
             setTimeout(() => {
                 this.drawPoint(point, index);
+                this.drawClickZone(point, index);
                 this.drawLabel(point, index);
             }, 400 + index * 300);
         });
+
+        // 初期表示（最初のカード）
+        setTimeout(() => {
+            this.showCard(0);
+        }, 2000);
     }
 
     drawPoint(point, index) {
-        // ポイント描画
         const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
         circle.setAttribute('cx', point.x);
         circle.setAttribute('cy', point.y);
-        circle.setAttribute('r', '6');
+        circle.setAttribute('r', '8');
         circle.setAttribute('fill', this.getColorByLevel(point.level));
         circle.setAttribute('stroke', '#ffffff');
-        circle.setAttribute('stroke-width', '2');
+        circle.setAttribute('stroke-width', '3');
+        circle.style.cursor = 'pointer';
         circle.style.opacity = '0';
         circle.style.transform = 'scale(0)';
         this.svg.appendChild(circle);
@@ -366,49 +343,36 @@ class EmotionGraph {
             circle.style.opacity = '1';
             circle.style.transform = 'scale(1)';
         }, 50);
+    }
 
-        // X軸ラベル（段階名）
-        const stageLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        stageLabel.setAttribute('x', point.x);
-        stageLabel.setAttribute('y', this.svgHeight - 15);
-        stageLabel.setAttribute('text-anchor', 'middle');
-        stageLabel.setAttribute('font-size', '12');
-        stageLabel.setAttribute('fill', '#6b7280');
-        stageLabel.textContent = point.stage;
-        this.svg.appendChild(stageLabel);
+    drawClickZone(point, index) {
+        const zoneWidth = (this.svgWidth - 2 * this.padding) / this.data.length;
+        const zone = document.createElement('div');
+        zone.className = 'emotion-click-zone';
+        
+        const leftPercent = ((this.padding + index * zoneWidth) / this.svgWidth) * 100;
+        const widthPercent = (zoneWidth / this.svgWidth) * 100;
+        
+        zone.style.left = `${leftPercent}%`;
+        zone.style.width = `${widthPercent}%`;
+        
+        zone.addEventListener('click', () => {
+            this.showCard(index);
+            console.log(`${point.emotion}: ${point.stage}`);
+        });
+        
+        this.container.appendChild(zone);
     }
 
     drawLabel(point, index) {
-        // ツールチップ風の情報表示
-        const tooltip = document.createElement('div');
-        tooltip.className = 'emotion-tooltip';
-        tooltip.innerHTML = `
-            <div class="emotion-label">
-                <strong>${point.emotion}</strong>
-                <span class="level">レベル: ${point.level}</span>
-            </div>
-            <p class="description">${point.description}</p>
-        `;
-        
-        // ポジション計算
-        const containerRect = this.container.getBoundingClientRect();
-        const svgRect = this.svg.getBoundingClientRect();
-        const scale = containerRect.width / this.svgWidth;
-        
-        tooltip.style.position = 'absolute';
-        tooltip.style.left = `${point.x * scale - 100}px`;
-        tooltip.style.top = `${point.y * scale - 80}px`;
-        tooltip.style.opacity = '0';
-        tooltip.style.transform = 'translateY(10px)';
-        
-        this.container.appendChild(tooltip);
-
-        // ツールチップアニメーション
-        setTimeout(() => {
-            tooltip.style.transition = 'all 0.3s ease-out';
-            tooltip.style.opacity = '1';
-            tooltip.style.transform = 'translateY(0)';
-        }, 100);
+        const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        label.setAttribute('x', point.x);
+        label.setAttribute('y', this.svgHeight - 15);
+        label.setAttribute('text-anchor', 'middle');
+        label.setAttribute('font-size', '12');
+        label.setAttribute('fill', '#6b7280');
+        label.textContent = point.stage;
+        this.svg.appendChild(label);
     }
 
     getColorByLevel(level) {
@@ -416,30 +380,157 @@ class EmotionGraph {
         if (level <= 60) return '#fbbf24';
         return '#10b981';
     }
+
+    showCard(index) {
+        const cardsContainer = document.getElementById('emotionCards');
+        const data = this.data[index];
+        
+        cardsContainer.innerHTML = `
+            <div class="emotion-card animate">
+                <h3>${data.stage}</h3>
+                <div class="emotion-level ${data.levelClass}">レベル ${data.level}</div>
+                <div class="emotion-title">${data.title}</div>
+                <div class="emotion-description">${data.description}</div>
+            </div>
+        `;
+
+        // アニメーション適用
+        setTimeout(() => {
+            const card = cardsContainer.querySelector('.emotion-card');
+            if (card) {
+                card.classList.add('show');
+            }
+        }, 100);
+    }
 }
 
 // 各事例データ定義
 const emotionData = {
     'pc-case': [
-        { stage: "問題発生", emotion: "困惑", level: 20, description: "PCが急に遅くなり、何をしても改善しない" },
-        { stage: "相談", emotion: "希望", level: 40, description: "Okaさんに相談、的確な質問で問題を整理" },
-        { stage: "診断", emotion: "理解", level: 60, description: "WiFi問題ではなくドライバー問題と判明" },
-        { stage: "解決", emotion: "安心", level: 90, description: "問題解決、今後の予防法も理解" },
-        { stage: "完了", emotion: "満足", level: 100, description: "技術的解決＋丁寧な説明で完全理解" }
+        { 
+            stage: "問題発生", 
+            emotion: "困惑", 
+            level: 20, 
+            levelClass: "low",
+            title: "混乱と不安",
+            description: "PCが急に遅くなり、何をしても改善しない。WiFi接続済みなのにインターネットに繋がらず、<br>どこから手をつければよいかわからない状態。"
+        },
+        { 
+            stage: "相談", 
+            emotion: "希望", 
+            level: 40, 
+            levelClass: "medium",
+            title: "希望の光",
+            description: "Okaさんに相談できることで少し安心感を得る。的確な質問で問題を整理してもらい、<br>解決への道筋が見え始める。"
+        },
+        { 
+            stage: "診断", 
+            emotion: "理解", 
+            level: 60, 
+            levelClass: "medium",
+            title: "理解と納得",
+            description: "WiFi問題ではなくドライバー問題と判明。問題の原因が明確になり、<br>専門的な診断により納得感と安心感が大幅に向上。"
+        },
+        { 
+            stage: "解決", 
+            emotion: "安心", 
+            level: 90, 
+            levelClass: "high",
+            title: "達成感と安心",
+            description: "問題が解決され、大きな達成感を感じる。今後の予防法も理解でき、同様の問題への対応力も身についた。"
+        },
+        { 
+            stage: "完了", 
+            emotion: "満足", 
+            level: 100, 
+            levelClass: "high",
+            title: "満足と感謝",
+            description: "技術的解決に加えて丁寧な説明で完全理解。<br>プロセス全体を振り返り、専門家への感謝と自分自身の成長を実感。"
+        }
     ],
     'google-case': [
-        { stage: "問題発生", emotion: "不安", level: 15, description: "重要なメールが消えてしまった" },
-        { stage: "相談", emotion: "期待", level: 35, description: "Okaさんに状況を詳しく説明" },
-        { stage: "調査", emotion: "理解", level: 55, description: "移動とキャンセルの違いを丁寧に説明" },
-        { stage: "発見", emotion: "驚き", level: 80, description: "ゴミ箱から無事にメールを発見" },
-        { stage: "完了", emotion: "感謝", level: 100, description: "今後同じ問題を避ける方法も習得" }
+        { 
+            stage: "問題発生", 
+            emotion: "不安", 
+            level: 15, 
+            levelClass: "low",
+            title: "パニックと焦り",
+            description: "重要なメールが消えてしまい、どこを探しても見つからない。仕事に支障が出る可能性があり、強い焦りと不安を感じる。"
+        },
+        { 
+            stage: "相談", 
+            emotion: "期待", 
+            level: 35, 
+            levelClass: "medium",
+            title: "希望の芽生え",
+            description: "Okaさんに状況を詳しく説明。親身に聞いてもらい、解決への期待感が生まれる。適切な質問で状況を整理してもらう。"
+        },
+        { 
+            stage: "調査", 
+            emotion: "理解", 
+            level: 55, 
+            levelClass: "medium",
+            title: "構造理解",
+            description: "メールの移動とキャンセルの違いを丁寧に説明してもらい、Gmailの仕組みへの理解が深まる。問題の構造が見えてくる。"
+        },
+        { 
+            stage: "発見", 
+            emotion: "驚き", 
+            level: 80, 
+            levelClass: "high",
+            title: "安堵と驚き",
+            description: "ゴミ箱から無事にメールを発見。消えたと思っていたメールが実は残っていたことに安堵感と驚きを感じる。"
+        },
+        { 
+            stage: "完了", 
+            emotion: "感謝", 
+            level: 100, 
+            levelClass: "high",
+            title: "深い感謝",
+            description: "メール復旧に加えて今後同じ問題を避ける方法も習得。専門的なサポートへの深い感謝と自信の向上を実感。"
+        }
     ],
     'android-case': [
-        { stage: "問題発生", emotion: "困惑", level: 25, description: "スマホの文字入力ができず混乱" },
-        { stage: "相談", emotion: "信頼", level: 45, description: "Okaさんが親身に状況を聞いてくれた" },
-        { stage: "方針決定", emotion: "納得", level: 65, description: "auショップでの対応が最適と判断" },
-        { stage: "橋渡し", emotion: "安心", level: 85, description: "問題を整理してショップスタッフに説明" },
-        { stage: "完了", emotion: "満足", level: 100, description: "迅速解決＋的確なサポートに感激" }
+        { 
+            stage: "問題発生", 
+            emotion: "困惑", 
+            level: 25, 
+            levelClass: "low",
+            title: "混乱状態",
+            description: "スマートフォンの文字入力ができなくなり、どこを触ったのかも分からない状態。日常生活に支障をきたす不安で混乱。"
+        },
+        { 
+            stage: "相談", 
+            emotion: "信頼", 
+            level: 45, 
+            levelClass: "medium",
+            title: "信頼の始まり",
+            description: "Okaさんが親身に状況を聞いてくれ、技術的な問題にも関わらず丁寧に対応してもらえることに信頼感を抱く。"
+        },
+        { 
+            stage: "方針決定", 
+            emotion: "納得", 
+            level: 65, 
+            levelClass: "medium",
+            title: "方向性の確信",
+            description: "auショップでの対応が最適という判断に納得。問題の性質を理解し、適切な解決方法が見つかったことで安心感が増す。"
+        },
+        { 
+            stage: "橋渡し", 
+            emotion: "安心", 
+            level: 85, 
+            levelClass: "high",
+            title: "手厚いサポート",
+            description: "問題を整理してショップスタッフに説明してもらい、スムーズな解決への道筋ができたことで大きな安心感を得る。"
+        },
+        { 
+            stage: "完了", 
+            emotion: "満足", 
+            level: 100, 
+            levelClass: "high",
+            title: "完全解決",
+            description: "迅速な解決に加えて、最適なサポート体制への橋渡しまでしてもらい、総合的なサポートの質に深い満足を感じる。"
+        }
     ]
 };
 
@@ -457,9 +548,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// 円形プログレスバーアニメーション（animations.jsに追加）
-
-// 円形プログレスのアニメーション関数
+// 円形プログレスバーアニメーション
 function animateCircularProgress(circle, targetPercent) {
     const percentElement = circle.querySelector('.skill-percent');
     let currentPercent = 0;
@@ -484,7 +573,7 @@ function animateCircularProgress(circle, targetPercent) {
     updateProgress();
 }
 
-// スキルセクションの初期化（animations.jsのDOMContentLoadedに追加）
+// スキルセクションの初期化
 document.addEventListener('DOMContentLoaded', function() {
     // スクロール時にスキルプログレスをアニメーション
     const skillCircles = document.querySelectorAll('.skill-circle');
@@ -514,8 +603,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// パーティクル背景システム（animations.jsに追加）
-
+// パーティクル背景システム
 class ParticleSystem {
     constructor(canvasId) {
         this.canvas = document.getElementById(canvasId);
