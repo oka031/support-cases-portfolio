@@ -1266,7 +1266,6 @@ body {
         transform: none;
     }
     
-    .nav-menu a,
     .case-card-link {
         min-height: 44px;
         display: flex;
@@ -1289,4 +1288,13 @@ body {
         color: black;
         padding: 2rem 0;
     }
+} 
+.footer-links a {
+    position: relative;
+    z-index: 1000; /* 高い値で最前面に */
+    pointer-events: auto !important; /* クリックイベントを強制的に有効化 */
 }
+
+.nav-cta, a[href="#contact"] {
+    display: none !important;
+  }

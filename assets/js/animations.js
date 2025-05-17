@@ -1,4 +1,4 @@
-// animations.js 完全版（クリック式感情グラフ対応）
+// animations.js 完全版（クリック式感情グラフ対応）- Contact Mail 対応をHTML側に移行
 
 // スクロールアニメーション
 document.addEventListener('DOMContentLoaded', function() {
@@ -41,6 +41,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         typewriter.start();
     });
+    
+    // コンソールログでJSロード完了確認
+    console.log('アニメーションJSロード完了 - HTMLにContactリンク機能移行済み');
 });
 
 // HTMLタグ対応タイピングアニメーション
@@ -763,4 +766,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('hero-particles')) {
         new ParticleSystem('hero-particles');
     }
+    
+    // コンソールログでJSロード完了確認
+    console.log('アニメーションJSロード完了 - HTMLにContactリンク機能移行済み');
 });
