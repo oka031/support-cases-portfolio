@@ -1340,3 +1340,37 @@ body {
         padding-top: 7rem; /* モバイルではさらにパディングを増やす */
     }
 }
+/* フッターリンクのCSS追加 */
+.footer-links p {
+    margin: 0 0 10px 0;
+    color: #ecf0f1;
+    font-weight: 300;
+}
+
+.footer-links a {
+    color: #3498db;
+    text-decoration: none;
+    position: relative;
+    z-index: 1000;
+    pointer-events: auto;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #5dade2;
+    text-decoration: underline;
+}
+
+/* スマホ対応 */
+@media (max-width: 768px) {
+    .footer-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .footer-links span {
+        display: none; /* モバイルでは区切り線を非表示 */
+    }
+}
