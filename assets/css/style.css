@@ -1298,3 +1298,45 @@ body {
 .nav-cta, a[href="#contact"] {
     display: none !important;
   }
+
+
+/* 現在の問題を解決するための修正 */
+
+/* ヒーローセクションのパディングを調整 */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    background: var(--hero-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    padding: 6rem 2rem 2rem; /* 上部のパディングを増やして、ナビゲーションバーとの重なりを避ける */
+}
+
+/* ナビゲーションバーの設定を調整 */
+.navbar {
+    position: fixed;
+    top: 4px; /* 進捗バーの分だけ下にずらす */
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000; /* z-indexを高く設定して、他の要素より前面に表示 */
+    transition: all 0.3s ease;
+}
+
+/* メインコピーの位置調整 */
+.hero-content {
+    max-width: 800px;
+    position: relative;
+    z-index: 2;
+    margin-top: 2rem; /* 上部マージンを追加 */
+}
+
+/* モバイル対応のための調整 */
+@media (max-width: 768px) {
+    .hero {
+        padding-top: 7rem; /* モバイルではさらにパディングを増やす */
+    }
+}
